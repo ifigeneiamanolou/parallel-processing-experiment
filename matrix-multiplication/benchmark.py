@@ -64,6 +64,7 @@ def plot_compare(df, num):
 ...         num (int): Number of the experiment
 ...  """
 
+    # Plot runtime against number of processors
     fig, axs = plt.subplots(nrows = 1, ncols = 2)
     fig.suptitle(f"Comparing performance with different number of processors for dataset {num}")
     axs[0].plot(df['size'], df['t_parallel'], color = 'red')
@@ -71,6 +72,7 @@ def plot_compare(df, num):
     axs[0].set_ylabel("Runtime")
     axs[0].grid(True)
 
+    # Plot speedup against number of processors
     speedup = df['t_serial'] / df['t_parallel']
     axs[1].plot(df['size'], speedup, color = 'red')
     axs[1].set_xlabel("Number of processors")
@@ -78,3 +80,18 @@ def plot_compare(df, num):
     axs[1].grid(True)
     plt.tight_layout(h_pad = 1, w_pad = 1)
     plt.show()
+
+    # Save the figure into a data folder
+    directory_name = "data"
+    # Create the directory
+    try:
+        os.mkdir(directory_name)
+        print(f"Directory '{directory_name}' created successfully.")
+    except FileExistsError:
+        pass
+    except PermissionError:
+        print(f"Permission denied: Unable to create '{directory_name}'.")
+    plt.savefig(os.path.join(directory_name, "output.ong"))
+
+
+
