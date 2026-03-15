@@ -22,7 +22,7 @@ git clone https://github.com/ifigeneiamanolou/parallel-processing-experiment.git
 
 2) Create a python virtual environment "myenv"
 
-python3.13 -m venv myenv
+python -m venv myenv
 
 Activate it using 
 
