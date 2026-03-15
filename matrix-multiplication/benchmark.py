@@ -79,10 +79,10 @@ def plot_compare(df, num):
     axs[1].set_ylabel("Speedup")
     axs[1].grid(True)
     plt.tight_layout(h_pad = 1, w_pad = 1)
-    plt.show()
 
     # Save the figure into a data folder
     directory_name = "data"
+    
     # Create the directory
     try:
         os.mkdir(directory_name)
@@ -91,7 +91,9 @@ def plot_compare(df, num):
         pass
     except PermissionError:
         print(f"Permission denied: Unable to create '{directory_name}'.")
-    plt.savefig(os.path.join(directory_name, "output.ong"))
+
+    fig.savefig(os.path.join(directory_name, f"output_{num}.png"))
+    plt.show()
 
 
 
