@@ -1,4 +1,4 @@
-# Performing a monte carlo simulation for random walks using parallel processors
+# Performing a monte carlo simulation for multiple random walks using parallel processors
 
 ## What is a Monte-Carlo simulation
 A mMonte-Carlo simulation is a method to understand how systems behave under uncertainty. It works by running multiple experiments with random inputs and then evaluating the possible outcomes and their respective probabilities. In other words, it uses random samples to estimate the expected value of a function f over a domain D (set of random samples). It has multiple real-world applications including:
@@ -11,7 +11,7 @@ A mMonte-Carlo simulation is a method to understand how systems behave under unc
 
 
 ## What are random walks
-In this project, we will focus on random walks. A random walk is a path formed by a sequence of random steps taken in 1-D or 2-D. We will simulate this, by randomly picking from a list of possible steps multiple times and visualizing the path using matplotlib. Random walks are used for example to:
+In this project, we will focus on random walks. A random walk is a path formed by a sequence of random steps taken in 1-D, 2-D and so on. We will simulate this, by randomly picking from a list of possible steps multiple times and visualizing the path using matplotlib. Random walks are used for example to:
 
 1. Simulate the movement of gas or liquid molecules
 2. Showcase stock market trends
@@ -26,10 +26,12 @@ Parallel processing can be used in Monte-Carlo simulations of random walks by di
 
 
 ## Outputs
-The key outputs of this program are:
+The key outputs of the results.ipynb file are:
 * A plot of runtime against number of processors
 * A plot of speedup against number of processos
 * Mean ending position of the random walk
 * Standard deviation of the ending position of the walk
 * Distribution plot of the ending position
+
+Further information on the project layout, along with user/developer instructions can be found on the README file of the whole project.
 
