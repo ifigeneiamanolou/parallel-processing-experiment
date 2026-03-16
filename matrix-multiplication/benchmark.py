@@ -57,6 +57,30 @@ def run_experiment(N):
     data = pd.DataFrame.from_dict(results)
     return data
 
+def compare_results(N):
+    """ Make sure that the serial and parallel implementation produce the correct results
+...     Args:
+...         N (int): size of the matrices
+...     Returns:
+...         DataFrame: DataFrame of the resulting runtime results for all 3 possible implementations and all number of processors
+...  """
+
+    # Random matrices
+    A = np.random.randint(0, 10, size = (N, N))
+    B = np.random.randint(0, 10, size = (N, N))
+
+    # Products
+    ABParallel = parallel.run_in_parallel(os.cpu_count(), A, B)
+    ABSerial = serial.multiply_matrices(A, B)
+    ABOptimized = optimized.multiply_matrices_optimized(A, B)
+
+    # Check if the results are the same
+    if(ABParallel == ABOptimized & ABOptimized == ABSerial):
+        return True
+    else:
+        return False
+
+
 def plot_compare(df, num):
     """ Produce a plot of the results given in a Dataframe
 ...     Args:
