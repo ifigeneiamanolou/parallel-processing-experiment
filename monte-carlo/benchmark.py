@@ -5,6 +5,7 @@ import pandas as pd
 import time
 import serial
 import parallel
+
 # Constants
 NUM_OF_WORKERS = [2, 4, 8]                      # number of processors working in parallel
                                                 # no need to test for 1 processor (serial)
@@ -25,7 +26,7 @@ def run_experiment(N, n):
     t_parallel = []
     for workers in NUM_OF_WORKERS:
         start_time = time.perf_counter()
-        parallel.run_in_parallel(workers, N, n)
+        parallel.parallel_monte_carlo(workers, N, n)
         end_time = time.perf_counter()
         t_parallel.append(end_time - start_time)
 
@@ -44,7 +45,6 @@ def run_experiment(N, n):
     # Return a dataframe of results
     data = pd.DataFrame.from_dict(results)
     return data
-
 
 
 def plot_random_walk(walk): 

@@ -75,7 +75,7 @@ def compare_results(N):
     ABOptimized = optimized.multiply_matrices_optimized(A, B)
 
     # Check if the results are the same
-    if(ABParallel == ABOptimized & ABOptimized == ABSerial):
+    if((ABParallel == ABOptimized).all() & (ABOptimized == ABSerial).all()):
         return True
     else:
         return False

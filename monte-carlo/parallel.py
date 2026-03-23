@@ -1,7 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from concurrent.futures import ProcessPoolExecutor
-import serial
+from multiprocessing import Pool
+import benchmark
+
+import os
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
 
 def parallel_monte_carlo(max_workers, N, n):
     """ Run the random walk multiple times (Monte-Carlo simulation) using a pool of parallel processors
@@ -14,9 +19,49 @@ def parallel_monte_carlo(max_workers, N, n):
 ...  """
 
     results = []
-    with ProcessPoolExecutor(max_workers=max_workers) as executor:
-        results = list(executor.map(lambda rep: serial.single_random_walk(n, rep), range(N)))
+    walks_per_worker = N // max_workers
+    args = [(n, walks_per_worker) for _ in range(max_workers)]
+    with Pool(processes = max_workers) as pool:
+        results = list(pool.map(single_random_walk, args))
 
     return results
-       
+
+def single_random_walk(args):   
+    """ Run a single random walk
+...     Args:
+...         n (int): number of steps to take during a single random walk
+            num (int) : number of the simulation running this walk
+...     Returns:
+...         tuple[ndarray, ndarray] : A tuple containing:
+                - x (ndarray) : x-coordinates of the random walk
+                - y (ndarray) : y-coordinates of the random walk
+...  """
+    n, num_of_walks = args
+    # TO DO: ASSIGN MULTIPLE TASKS TO ONE PROCESSOR LIKE MULTIPLE WALKS
+    results = []
+
+    # Array of possible moves at each step
+    moves = np.array([(-1, 0), (1, 0), (0, 1), (0, -1)])
+     
+    for irep in range(num_of_walks):
+
+        # Randomly generate n steps choosing from the above list
+        indexes = np.random.choice(len(moves), n)
+        steps = moves[indexes]
+
+        # Take the cumulative sum
+        coords = np.vstack(([0, 0], np.cumsum(steps, axis = 0)))
+
+        # Extract x, y coordinates
+        # x, y = coords[:, 0], coords[:, 1]
+
+        # TO DO: RETURN SUMMARY STATISTICS : FINAL POSITION, DISTANCE, MEAN DISPLACEMENT
+        # Return the x-y coordinates at each step ==> now it returns ENDING POSITION
+        results.append(coords[-1])
+
+    return results
+
+if __name__ == "__main__":
+    data = benchmark.run_experiment(1000000, 100000)
+    benchmark.plot_compare(data, 1)
 

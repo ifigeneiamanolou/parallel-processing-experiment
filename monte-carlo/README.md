@@ -24,7 +24,6 @@ We will simulate a 2D random walk, where the walker has 4 possible options for i
 ## How parallel processing can be applied to random walks
 Parallel processing can be used in Monte-Carlo simulations of random walks by distributiing the workload (large number of independant random walks) between multiple processors. Since this is a CPU-heavy task, we used ProcessPoolExecutor, which is a subclass of Executor, from the Python library concurrent.futures. In essense, it employs a pool of processors to execute calls to functions asychronously.
 
-
 ## Outputs
 The key outputs of the results.ipynb file are:
 * A plot of runtime against number of processors
